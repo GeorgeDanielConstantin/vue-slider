@@ -53,10 +53,16 @@ createApp({
       ],
 
       activeImage: 0,
+
+      autoplay: 0,
     };
   },
 
   methods: {
+    switchImage(i) {
+      this.activeImage = i;
+    },
+
     next() {
       if (this.activeImage + 1 < this.slides.length) {
         this.activeImage++;
@@ -73,8 +79,20 @@ createApp({
       }
     },
 
-    switchImage(i) {
-      this.activeImage = i;
+    stopAutoplay() {
+      clearInterval(this.autoplay);
     },
+
+    startAutoplay() {
+      this.autoplay = setInterval(() => {
+        this.next();
+      }, 3000);
+    },
+  },
+
+  created() {
+    this.autoplay = setInterval(() => {
+      this.next();
+    }, 3000);
   },
 }).mount("#app");
